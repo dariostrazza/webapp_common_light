@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="robotapp">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="robotappejb.jar" deploy-path="/" handle="module:/resource/robotappejb/robotappejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="robotappejbClient.jar" deploy-path="/" handle="module:/resource/robotappejbClient/robotappejbClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="robotappservice.war" deploy-path="/" handle="module:/resource/robotappservice/robotappservice">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="robotappjpa.jar" deploy-path="/lib" handle="module:/resource/robotappjpa/robotappjpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="robotappcommon.jar" deploy-path="/lib" handle="module:/resource/robotappcommon/robotappcommon">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

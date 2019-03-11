@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<eclipse-userlibraries version="2">
+    <library name="APACHE_POI_3_17" systemlibrary="false">
+        <archive path="/robotapplib/apache_poi_3_17/commons-collections4-4.1.jar"/>
+        <archive path="/robotapplib/apache_poi_3_17/poi-3.17.jar"/>
+        <archive path="/robotapplib/apache_poi_3_17/poi-excelant-3.17.jar"/>
+        <archive path="/robotapplib/apache_poi_3_17/poi-ooxml-3.17.jar"/>
+        <archive path="/robotapplib/apache_poi_3_17/poi-ooxml-schemas-3.17.jar"/>
+        <archive path="/robotapplib/apache_poi_3_17/poi-scratchpad-3.17.jar"/>
+    </library>
+    <library name="COMMONS_LOGGING_1_2" systemlibrary="false">
+        <archive path="/robotapplib/commons_logging_1_2/commons-logging-1.2.jar"/>
+    </library>
+    <library name="LOG4J_1_2_17" systemlibrary="false">
+        <archive path="/robotapplib/log4j_1_2_17/datedFileAppender-1.0.2.jar"/>
+        <archive path="/robotapplib/log4j_1_2_17/log4j-1.2.17.jar"/>
+    </library>
+    <library name="SWA" systemlibrary="false">
+        <archive path="/robotapplib/swa/service1_WSDL_PROD.wsdl.jar"/>
+    </library>
+</eclipse-userlibraries>

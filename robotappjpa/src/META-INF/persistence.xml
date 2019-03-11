@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="robotappjpa">
+	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+	<jta-data-source>java:/MySqlDS</jta-data-source>
+		<class>it.rpa.model.table.classes.RpAssProcessCode</class>
+		<class>it.rpa.model.table.classes.RpAssProcessCodePK</class>
+		<class>it.rpa.model.table.classes.RpAssProcessOwner</class>
+		<class>it.rpa.model.table.classes.RpAssProcessUserPK</class>
+		<class>it.rpa.model.table.classes.RpAssProfCode</class>
+		<class>it.rpa.model.table.classes.RpAssProfCodePK</class>
+		<class>it.rpa.model.table.classes.RpAssProfFunc</class>
+		<class>it.rpa.model.table.classes.RpAssProfFuncPK</class>
+		<class>it.rpa.model.table.classes.RpAssProfMenu</class>
+		<class>it.rpa.model.table.classes.RpAssProfMenuPK</class>
+		<class>it.rpa.model.table.classes.RpAssSubProfFunc</class>
+		<class>it.rpa.model.table.classes.RpAssSubProfFuncPK</class>
+		<class>it.rpa.model.table.classes.RpAssSubProfMenu</class>
+		<class>it.rpa.model.table.classes.RpAssSubProfMenuPK</class>
+		<class>it.rpa.model.table.classes.RpBusinessOwner</class>
+		<class>it.rpa.model.table.classes.RpDataCatalog</class>
+		<class>it.rpa.model.table.classes.RpEnablingCode</class>
+		<class>it.rpa.model.table.classes.RpExceptionCatalog</class>
+		<class>it.rpa.model.table.classes.RpExtSystem</class>
+		<class>it.rpa.model.table.classes.RpFunctionality</class>
+		<class>it.rpa.model.table.classes.RpMenu</class>
+		<class>it.rpa.model.table.classes.RpOffice</class>
+		<class>it.rpa.model.table.classes.RpProcess</class>
+		<class>it.rpa.model.table.classes.RpProcessInputType</class>
+		<class>it.rpa.model.table.classes.RpProcessType</class>
+		<class>it.rpa.model.table.classes.RpProfile</class>
+		<class>it.rpa.model.table.classes.RpQueue</class>
+		<class>it.rpa.model.table.classes.RpUser</class>
+		<class>it.rpa.model.view.classes.RpvAssCodeExtQueueId</class>
+		<class>it.rpa.model.view.classes.RpvAssCodeProcDetail</class>
+		<class>it.rpa.model.view.classes.RpvAssProfCode</class>
+		<class>it.rpa.model.view.classes.RpvAssProfMenu</class>
+		<class>it.rpa.model.view.classes.RpvAssQueueProcess</class>
+		<class>it.rpa.model.view.classes.RpvAssSubProfMenu</class>
+		<class>it.rpa.model.view.classes.RpvAssUserCodeProf</class>
+		<properties>
+			<property name="eclipselink.weaving" value="true"></property>
+			<property name="eclipselink.query-results-cache" value="false" />
+			<property name="eclipselink.cache.shared.default" value="false" />
+		</properties>
+	</persistence-unit>
+</persistence>

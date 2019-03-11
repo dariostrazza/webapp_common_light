@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+<!-- DEFAULT APPENDER  -->
+
+<appender name="SystemIntegratorFileAppenderController" class="org.apache.log4j.DailyRollingFileAppender">
+	<param name="file" value="/spimi/logs/weblogic/wrpa0/controller"/>
+	<param name="append" value="true" />
+	<param name="datePattern" value="'.'yyyyMMdd'.log'" />
+	<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="|%X{user}|%X{function}|%d{ddMMyy-HH:mm:ss}|%m|%n" />
+	</layout>
+</appender>
+
+<appender name="SystemIntegratorFileAppenderWeb" class="org.apache.log4j.DailyRollingFileAppender">
+	<param name="file" value="/spimi/logs/weblogic/wrpa0/web"/>
+	<param name="append" value="true" />
+	<param name="datePattern" value="'.'yyyyMMdd'.log'" />
+	<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="|%X{user}|%X{function}|%d{ddMMyy-HH:mm:ss}|%m|%n" />
+	</layout>
+</appender>
+
+
+<!-- DEFAULT LOGGER  -->
+
+<logger name="CONTROLLER">
+	<appender-ref ref="SystemIntegratorFileAppenderController"/>
+</logger>
+
+<logger name="WEB">
+	<appender-ref ref="SystemIntegratorFileAppenderWeb"/>
+</logger>
+
+</log4j:configuration>
