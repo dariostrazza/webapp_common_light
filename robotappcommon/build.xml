@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE project>
+<project basedir="." default="build" name="robotappcommon">
+    <property environment="env"/>
+	<property file="${env.ANTPROPERTIES}"/>
+		
+    <property file="../robotapp/build.properties" />
+    <import file="${robotapp.classpath.file}"/>
+
+    <target name="prepare">
+        <delete dir="${robotappcommon.build.dir}"/>
+	 	<mkdir dir="${robotappcommon.build.dir}"/>	
+    </target>
+	
+	<target name="init" depends="prepare">
+        <mkdir dir="${robotappcommon.build.dir}/${bin.build.dir}"/>
+        <copy includeemptydirs="false" todir="${robotappcommon.build.dir}/${bin.build.dir}">
+            <fileset dir="${robotappcommon.location}/src">
+                <exclude name="**/*.java"/>
+                <exclude name="**/MANIFEST.MF"/>
+            </fileset>
+        </copy>
+    </target> 
+	
+    <target name="compile" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}"
+        	destdir="${robotappcommon.build.dir}/${bin.build.dir}" 
+        	includeantruntime="false" source="${source}" target="${target}"
+        	executable="${javahome}"
+        	verbose="${verbose}"
+        	deprecation="${deprecation}"
+        	encoding="${encoding}">
+            <src path="${robotappcommon.location}/src"/>
+            <classpath refid="robotappcommon.classpath"/>
+        </javac>
+    </target>
+	
+	<target name="condition">
+	  	<condition property="isEarConfig">
+	  		<istrue value="${target.app.config.out}" />
+	  	</condition>
+  	</target>
+              	
+ 	<target name="build" depends="compile" description="Create robotappcommon JAR archive">
+    	<echo>Create robotappcommon jar file</echo>
+		
+	    <jar destfile="${robotappcommon.jar.dir}/${robotappcommon.jar.name}.jar">
+	   		<fileset dir="${robotappcommon.build.dir}/${bin.build.dir}"/>
+	    	<manifest>
+	            <attribute name="Class-Path" value="${robotappcommon.manifest}"/>
+	        </manifest>
+	    </jar>
+		<echo>END: Building robotappcommon executable modules</echo>
+	</target>
+	
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="build"/>
+        <ant antfile="build.xml" dir="${robotappejbClient.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${robotappejbClient.location}" inheritAll="false" target="build"/>
+        <ant antfile="build.xml" dir="${robotappservice.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${robotappservice.location}" inheritAll="false" target="build"/>
+    </target>
+</project>

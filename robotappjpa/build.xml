@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE project>
+<project basedir="." default="build" name="robotappjpa">
+    <property environment="env"/>
+
+    <property file="${env.ANTPROPERTIES}"/>
+    <property file="../robotapp/build.properties" />
+	<import file="${robotapp.classpath.file}"/>
+
+    <target name="prepare">
+        <delete dir="${robotappjpa.build.dir}"/>
+	 	<mkdir dir="${robotappjpa.build.dir}"/>			
+    </target>  
+              	
+    <target name="init" depends="prepare">
+          <mkdir dir="${robotappjpa.build.dir}/${class.build.dir}"/>
+          <copy includeemptydirs="false" todir="${robotappjpa.build.dir}/${class.build.dir}">
+              <fileset dir="${robotappjpa.location}/src">
+                  <exclude name="**/*.java"/>
+                  <exclude name="**/MANIFEST.MF"/>
+              </fileset>
+          </copy>
+
+     </target>
+              	
+	<target name="compile" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" 
+        	destdir="${robotappjpa.build.dir}/${class.build.dir}" 
+        	includeantruntime="false" source="${source}" target="${target}"
+        	executable="${javahome}"
+        	verbose="${verbose}"
+        	deprecation="${deprecation}"
+        	encoding="${encoding}">
+            <src path="${robotappjpa.location}/src"/>
+            <classpath refid="robotappjpa.classpath"/>
+        </javac>
+    </target>
+
+	<target name="build" depends="compile" description="Create robotappjpa JAR archive">
+    	<echo>Create robotappjpa jar file</echo>
+		
+	    <jar destfile="${robotappjpa.jar.dir}/${robotappjpa.jar.name}.jar">
+	   		<fileset dir="${robotappjpa.build.dir}/${class.build.dir}"/>
+	    	<manifest>
+	            <attribute name="Class-Path" value="${robotappjpa.manifest}"/>
+	        </manifest>
+	    </jar>
+		<echo>END: Building robotappjpa modules</echo>
+	</target>
+              	
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="build"/>
+    </target>
+</project>

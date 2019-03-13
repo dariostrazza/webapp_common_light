@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="robotappcommon">
+    <property environment="env"/>
+    <property name="robotappejb.location" value="../robotappejb"/>
+    <property name="robotappejbClient.location" value="../robotappejbClient"/>
+    <property name="robotappservice.location" value="../robotappservice"/>
+    <property name="ECLIPSE_HOME" value="../../../../../eclipse/jee-2018-12/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+    <path id="LOG4J_1_2_17.userclasspath">
+        <pathelement location="../robotapplib/log4j_1_2_17/datedFileAppender-1.0.2.jar"/>
+        <pathelement location="../robotapplib/log4j_1_2_17/log4j-1.2.17.jar"/>
+    </path>
+    <path id="APACHE_POI_3_17.userclasspath">
+        <pathelement location="../robotapplib/apache_poi_3_17/commons-collections4-4.1.jar"/>
+        <pathelement location="../robotapplib/apache_poi_3_17/poi-3.17.jar"/>
+        <pathelement location="../robotapplib/apache_poi_3_17/poi-excelant-3.17.jar"/>
+        <pathelement location="../robotapplib/apache_poi_3_17/poi-ooxml-3.17.jar"/>
+        <pathelement location="../robotapplib/apache_poi_3_17/poi-ooxml-schemas-3.17.jar"/>
+        <pathelement location="../robotapplib/apache_poi_3_17/poi-scratchpad-3.17.jar"/>
+    </path>
+    <path id="COMMONS_LOGGING_1_2.userclasspath">
+        <pathelement location="../robotapplib/commons_logging_1_2/commons-logging-1.2.jar"/>
+    </path>
+    <path id="robotappcommon.classpath">
+        <pathelement location="bin"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+        <path refid="LOG4J_1_2_17.userclasspath"/>
+        <path refid="APACHE_POI_3_17.userclasspath"/>
+        <path refid="COMMONS_LOGGING_1_2.userclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}" encoding="iso-8859-1">
+            <src path="src"/>
+            <classpath refid="robotappcommon.classpath"/>
+        </javac>
+    </target>
+
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+              	
+              	
+            	<target name="makejar" depends="build" description="Create robotappcommon JAR archive">
+                	<echo>Create robotappcommon jar file</echo>
+            		
+            	    <jar destfile="../robotappcommon/build/robotappcommon.jar">
+            	   		<fileset dir="build/classes"/>
+            	    	<manifest>
+            	            <attribute name="Class-Path" value=""/>
+            	        </manifest>
+            	    </jar>
+            		<echo>END: Building robotappcommon executable modules</echo>
+            	</target>
+    
+</project>

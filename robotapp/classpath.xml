@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE project>
+<project basedir="." name="robotappclasspath">
+ 
+ 	<path id="project-path" >
+ 		<pathelement location="${robotapp.location}"/>
+		<!--<pathelement location="${robotappbpadapterjpa.location}"/>	-->		
+		<pathelement location="${robotappcommon.location}"/>			
+		<pathelement location="${robotappejb.location}"/>		
+		<pathelement location="${robotappejbClient.location}"/>
+		<pathelement location="${robotapplib.location}"/>
+		<pathelement location="${robotappjpa.location}"/>				
+		<pathelement location="${robotappservice.location}"/>			
+ 		<pathelement location="${user.library.location}"/>
+	</path> 
+
+
+    <!-- Project Libraries Class Path -->
+	<path id="EAR UserLibrary">
+		<path refid="COMMONS_LOGGING_1_2.userclasspath"/>
+		<path refid="LOG_4J_1_2_17.userclasspath"/>
+		<path refid="APACHE_POI_3_17.userclasspath"/>
+		<path refid="SWA.userclasspath"/>
+	</path>
+        	
+    <path id="EAR Libraries.libraryclasspath">
+        <pathelement location="${robotappjpa.build.dir}"/>
+        <!--<pathelement location="${robotappbpadapterjpa.build.dir}"/>-->
+        <pathelement location="${robotappcommon.build.dir}"/>
+        <pathelement location="${robotappejbClient.build.dir}"/>
+        <pathelement location="${robotappejb.build.dir}"/>
+    </path>
+	
+	<path id="WebLogic System Libraries.libraryclasspath">
+		<fileset dir="${user.library.location}" includes="javax.persistence_2.1.jar"/>
+		<fileset dir="${user.library.location}" includes="javax.enterprise.inject_1.2.jar"/>
+	    <fileset dir="${weblogic.wlserver.location}" includes="**/*.jar"/>
+	</path>
+
+    <path id="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+    <path id="COMMONS_LOGGING_1_2.userclasspath">
+        <pathelement location="${user.library.location}/commons_logging_1_2/commons-logging-1.2.jar"/>
+    </path>
+    <path id="LOG_4J_1_2_17.userclasspath">
+        <pathelement location="${user.library.location}/log4j_1_2_17/datedFileAppender-1.0.2.jar"/>
+        <pathelement location="${user.library.location}/log4j_1_2_17/log4j-1.2.17.jar"/>
+    </path>
+    <path id="APACHE_POI_3_17.userclasspath">
+        <pathelement location="${user.library.location}/apache_poi_3_17/commons-collections4-4.1.jar"/>
+        <pathelement location="${user.library.location}/apache_poi_3_17/poi-3.17.jar"/>
+        <pathelement location="${user.library.location}/apache_poi_3_17/poi-excelant-3.17.jar"/>
+        <pathelement location="${user.library.location}/apache_poi_3_17/poi-ooxml-3.17.jar"/>
+        <pathelement location="${user.library.location}/apache_poi_3_17/poi-ooxml-schemas-3.17.jar"/>
+        <pathelement location="${user.library.location}/apache_poi_3_17/poi-scratchpad-3.17.jar"/>
+    </path>
+	<path id="WS.userclasspath">
+	    	<pathelement location="${user.library.location}/ws/javax.ws.rs-api-2.0.jar"/>
+	    	<pathelement location="${user.library.location}/ws/commons.codec-1.10.jar"/>
+	    	<pathelement location="${user.library.location}/ws/commons-logging-1.2.jar"/>
+	</path>
+	<path id="SWA.userclasspath">
+	    	<pathelement location="${user.library.location}/swa/service1_WSDL_PROD.wsdl.jar"/>
+	</path>
+	
+    <!-- Project Modules Class Path -->
+    <path id="robotappjpa.classpath">
+        <pathelement location="${robotappjpa.build.dir}/${class.build.dir}"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+    </path>
+    <path id="robotappbpadapterjpa.classpath">
+      <!--  <pathelement location="${robotappbpadapterjpa.build.dir}/${class.build.dir}"/>-->
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+    </path>
+    <path id="robotappcommon.classpath">
+        <pathelement location="${robotappcommon.build.dir}/${bin.build.dir}"/>
+        <pathelement location="${jre.library.location}/rt.jar"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="COMMONS_LOGGING_1_2.userclasspath"/>
+        <path refid="LOG_4J_1_2_17.userclasspath"/>
+    	<path refid="APACHE_POI_3_17.userclasspath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+    </path>
+    <path id="robotappejbClient.classpath">
+        <pathelement location="${robotappejbClient.build.dir}/${class.build.dir}"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+        <path refid="robotappcommon.classpath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+    </path>
+    <path id="robotappejb.classpath">
+        <pathelement location="${robotappejb.build.dir}/${class.build.dir}"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+        <path refid="robotappejbClient.classpath"/>
+        <path refid="robotappcommon.classpath"/>
+        <path refid="robotappjpa.classpath"/>
+        <path refid="COMMONS_LOGGING_1_2.userclasspath"/>
+    	<path refid="SWA.userclasspath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+    </path>
+     <path id="robotappservice.classpath">
+        <pathelement location="${robotappservice.build.dir}/WEB-INF/classes"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Enterprise Application Libraries [robotapp].libraryclasspath"/>
+        <path refid="robotappcommon.classpath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+        <path refid="robotappejbClient.classpath"/>
+     	<path refid="WS.userclasspath"/>
+    </path>
+	
+    <!-- Project Modules Manifest (Export classpath) -->
+	<regexpmapper handledirsep="true" id="mapper.manifest" from="^(.*)/([^/]+)/([^/]*)$$" to="**/\3"/>
+		
+	<pathconvert refid="COMMONS_LOGGING_1_2.userclasspath" property="COMMONS_LOGGING_1_2.exportclasspath" pathsep=" ">
+		<mapper refid="mapper.manifest"/>
+	</pathconvert>
+	<pathconvert refid="LOG_4J_1_2_17.userclasspath" property="LOG_4J_1_2_17.exportclasspath" pathsep=" ">
+		<mapper refid="mapper.manifest"/>
+	</pathconvert>
+	<pathconvert refid="APACHE_POI_3_17.userclasspath" property="APACHE_POI_3_17.exportclasspath" pathsep=" ">
+		<mapper refid="mapper.manifest"/>
+	</pathconvert>
+	<pathconvert refid="WS.userclasspath" property="WS.exportclasspath" pathsep=" ">
+		<mapper refid="mapper.manifest"/>
+	</pathconvert>
+	<pathconvert refid="SWA.userclasspath" property="SWA.exportclasspath" pathsep=" ">
+		<mapper refid="mapper.manifest"/>
+	</pathconvert>
+
+	<resources id="robotappcommon.manifestclasspath">
+	  	<string>${COMMONS_LOGGING_1_2.exportclasspath}</string>
+		<string>${LOG_4J_1_2_17.exportclasspath}</string>
+		<string>${APACHE_POI_3_17.exportclasspath}</string>
+	</resources>
+	<pathconvert property="robotappcommon.manifest" refid="robotappcommon.manifestclasspath" pathsep=" " />
+	
+	<resources id="robotappejb.manifestclasspath">
+	  	<string>${robotappejbClient.jar.name}.jar</string>
+		<string>${SWA.exportclasspath}</string>
+	</resources>
+	<pathconvert property="robotappejb.manifest" refid="robotappejb.manifestclasspath" pathsep=" " />
+	
+	<resources id="robotappejbClient.manifestclasspath">
+	</resources>
+	<pathconvert property="robotappejbClient.manifest" refid="robotappejbClient.manifestclasspath" pathsep=" " />
+	
+	<resources id="robotappjpa.manifestclasspath">
+	</resources>
+	<pathconvert property="robotappjpa.manifest" refid="robotappjpa.manifestclasspath" pathsep=" " />
+	
+	<!--<resources id="robotappbpadapterjpa.manifestclasspath">
+	</resources>
+	<pathconvert property="robotappbpadapterjpa.manifest" refid="robotappbpadapterjpa.manifestclasspath" pathsep=" " />
+-->
+</project>

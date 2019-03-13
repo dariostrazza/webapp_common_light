@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<!DOCTYPE project>
+<project name="robotapp" default="build-project">
+	<property environment="env"/>
+	<property file="${env.ANTPROPERTIES}"/>
+  	<property file="build.properties" />
+  	<import file="classpath.xml" />
+	
+	 <target name="prepare" description="Create working dirs">		
+	 	<delete dir="${robotapp.build.dir}"/>	
+	    <mkdir dir="${robotapp.build.dir}"/>
+	 </target>
+	
+	<target name="init" depends="prepare">
+        <copy includeemptydirs="false" todir="${robotapp.build.dir}/">
+            <fileset dir="${robotapp.appxml.location}/..">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+	<!-- Build robotapp modules -->	
+	<!--<target name="robotappbpadapterjpa-build">
+		<echo>START: Building robotappbpadapterjpa modules</echo>
+		<ant antfile="build.xml" dir="${robotappbpadapterjpa.location}" inheritAll="false" target="build"/>
+	</target>
+	-->
+	<target name="robotappjpa-build">
+		<echo>START: Building robotappjpa modules</echo>
+	    <ant antfile="build.xml" dir="${robotappjpa.location}" inheritAll="false" target="build"/>
+	</target>
+	<target name="robotappcommon-build">
+		<echo>START: Building robotappcommon modules</echo>
+		<ant antfile="build.xml" dir="${robotappcommon.location}" inheritAll="false" target="build"/>
+	</target>
+	<target name="robotappejbClient-build">
+		<echo>START: Building robotappejbClient modules</echo>
+		<ant antfile="build.xml" dir="${robotappejbClient.location}" inheritAll="false" target="build"/>
+	</target>
+	<target name="robotappejb-build">
+		<echo>START: Building robotappejb modules</echo>
+		<ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="build"/>
+	</target>
+	<target name="robotappservice-build">
+		<echo>START: Building robotappservice modules</echo>
+		<ant antfile="build.xml" dir="${robotappservice.location}" inheritAll="false" target="build"/>
+	</target>
+
+	<!-- Condition target robotapp build task -->
+  	<target name="condition">
+	  	<condition property="isAppBuild">
+	  		<istrue value="${target.app.ear.out}" />
+	  	</condition>
+  	</target>
+	  		
+	<!-- Create ear robotapp application -->
+	<target name="app-build" 
+		depends="init,robotappjpa-build,robotappcommon-build,robotappejbClient-build,robotappejb-build,robotappservice-build"  
+		description="Create EAR archive">
+    	<echo>Create application ear file</echo>
+
+		<pathconvert refid="EAR UserLibrary" property="ear.classpath" pathsep=" ">
+			<regexpmapper handledirsep="true" from="^(.*)/([^/]+)/([^/]*)$$" to="\2/\3 \3"/>
+		</pathconvert>
+		
+		<echo>EAR UserLibrary Path: ${ear.classpath}</echo>
+    	<ear destfile="${robotapp.ear.dir}/${robotapp.ear.name}.ear" appxml="${robotapp.appxml.build.dir}/application.xml">
+    		<fileset dir="${robotapp.build.dir}" includes="META-INF/*.*"/>
+    		
+    		<fileset dir="${robotappejb.jar.dir}" includes="${robotappejb.jar.name}.jar"/>
+    		<fileset dir="${robotappejbClient.jar.dir}" includes="${robotappejbClient.jar.name}.jar"/>
+    		<fileset dir="${robotappservice.war.dir}" includes="${robotappservice.war.name}.war"/>
+    		
+    		<zipfileset dir="${robotappcommon.jar.dir}" includes="${robotappcommon.jar.name}.jar" prefix="${robotapp.ear.lib}"/>
+    		<zipfileset dir="${robotappjpa.jar.dir}" includes="${robotappjpa.jar.name}.jar" prefix="${robotapp.ear.lib}"/>
+    		<!--<zipfileset dir="${robotappbpadapterjpa.jar.dir}" includes="${robotappbpadapterjpa.jar.name}.jar" prefix="${robotapp.ear.lib}"/>-->
+    		
+    		<mappedresources>
+    			<zipfileset dir="${user.library.location}" includes="${ear.classpath}" />
+    			<mapper type="regexp" from="([^/\\]*[/\\])*([^\\]*)$$" to="${robotapp.ear.lib}/\2" />
+    		</mappedresources>
+    	</ear>
+    </target>
+
+	<!-- Clear all target directory -->
+	<target name="clear-build" description="Clear all target directory">
+		<echo>Clear all target directory</echo>
+		<delete dir="${robotapp.appxml.build.dir}"/>				
+	<!--	<delete dir="${robotappbpadapterjpa.build.dir}"/>		-->
+		<delete dir="${robotappcommon.build.dir}"/>			
+		<delete dir="${robotappejb.build.dir}"/>		
+		<delete dir="${robotappejbClient.build.dir}"/>
+		<delete dir="${robotappjpa.build.dir}"/>			
+		<delete dir="${robotappservice.build.dir}"/>			
+	</target>
+	
+	<!-- Clear all diralias directory -->
+	<target name="prepare-diralias" description="Prepare diralias directory">
+		<echo>Prepare diralias directory</echo>
+	 	<delete dir="${robotapp.ear.dir}"/>	
+	    <mkdir dir="${robotapp.ear.dir}"/>
+	</target>
+	
+	<!-- Main task to build robotapp -->
+	<target name="build-project" depends="condition">
+		<ant target="prepare-diralias"/>
+		<ant target="app-build"/>
+		<ant target="clear-build"/>
+	</target>
+	
+</project>

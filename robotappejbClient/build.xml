@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE project>
+<project basedir="." default="build" name="robotappejbClient">
+    <property environment="env"/>
+	<property file="${env.ANTPROPERTIES}"/>
+	
+    <property file="../robotapp/build.properties" />
+    <import file="${robotapp.classpath.file}"/>
+
+    <target name="prepare">
+        <delete dir="${robotappejbClient.build.dir}"/>
+	 	<mkdir dir="${robotappejbClient.build.dir}"/>
+    </target> 
+	
+	<target name="init" depends="prepare">
+        <mkdir dir="${robotappejbClient.build.dir}/${class.build.dir}"/>
+        <copy includeemptydirs="false" todir="${robotappejbClient.build.dir}/${class.build.dir}">
+            <fileset dir="${robotappejbClient.location}/ejbModule">
+                <exclude name="**/*.java"/>
+                <exclude name="**/MANIFEST.MF"/>
+            </fileset>
+        </copy>
+    </target>
+	
+    <target name="compile" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" 
+        	destdir="${robotappejbClient.build.dir}/${class.build.dir}" 
+        	includeantruntime="false" source="${source}" target="${target}"
+        	executable="${javahome}"
+        	verbose="${verbose}"
+        	deprecation="${deprecation}"
+        	encoding="${encoding}">
+            <src path="${robotappejbClient.location}/ejbModule"/>
+            <classpath refid="robotappejbClient.classpath"/>
+        </javac>
+    </target>
+
+	<target name="build" depends="compile" description="Create robotappejbClient JAR archive">
+    	<echo>Create robotappejbClient jar file</echo>
+		
+	    <jar destfile="${robotappejbClient.jar.dir}/${robotappejbClient.jar.name}.jar">
+	   		<fileset dir="${robotappejbClient.build.dir}/${class.build.dir}"/>
+	    	<manifest>
+	            <attribute name="Class-Path" value="${robotappejbClient.manifest}"/>
+	        </manifest>
+	    </jar>
+		<echo>END: Building robotappejbClient modules</echo>
+	</target>
+	
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${robotappejb.location}" inheritAll="false" target="build"/>
+        <ant antfile="build.xml" dir="${robotappservice.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${robotappservice.location}" inheritAll="false" target="build"/>
+    </target>
+</project>

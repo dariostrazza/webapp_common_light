@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE project>
+<project basedir="." default="build" name="robotappejb">
+    <property environment="env"/>
+	<property file="${env.ANTPROPERTIES}"/>
+		
+	<property file="../robotapp/build.properties" />
+    <import file="${robotapp.classpath.file}"/>
+
+    <target name="prepare">
+        <delete dir="${robotappejb.build.dir}"/>	
+	 	<mkdir dir="${robotappejb.build.dir}"/>	
+    </target> 
+          	
+	<target name="init" depends="prepare">
+        <mkdir dir="${robotappejb.build.dir}/${class.build.dir}"/>
+        <copy includeemptydirs="false" todir="${robotappejb.build.dir}/${class.build.dir}">
+            <fileset dir="${robotappejb.location}/ejbModule">
+                <exclude name="**/*.java"/>
+                <exclude name="**/MANIFEST.MF"/>
+            </fileset>
+        </copy>
+    </target>
+       
+    <target name="compile" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" 
+        	destdir="${robotappejb.build.dir}/${class.build.dir}" 
+        	includeantruntime="false" source="${source}" target="${target}"
+        	executable="${javahome}"
+        	verbose="${verbose}"
+        	deprecation="${deprecation}"
+        	encoding="${encoding}" >
+            <src path="${robotappejb.location}/ejbModule"/>
+            <classpath refid="robotappejb.classpath"/>
+        </javac>
+    </target>
+              	
+	<target name="build" depends="compile" description="Create robotappejb JAR archive">
+    	<echo>Create robotappejb jar file</echo>
+		
+	    <jar destfile="${robotappejb.jar.dir}/${robotappejb.jar.name}.jar">
+	   		<fileset dir="${robotappejb.build.dir}/${class.build.dir}"/>
+	    	<manifest>
+	            <attribute name="Class-Path" value="${robotappejb.manifest}"/>
+	        </manifest>
+	    </jar>
+		<echo>END: Building robotappejb modules</echo>
+	</target>
+              	
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+</project>

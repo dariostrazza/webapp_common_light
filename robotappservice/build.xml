@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE project>
+<project basedir="." default="build" name="robotappservice">
+    <property environment="env"/>
+
+	<property file="${env.ANTPROPERTIES}"/>
+    <property file="../robotapp/build.properties" />
+	<import file="${robotapp.classpath.file}"/>
+
+    <target name="prepare">
+        <delete dir="${robotappservice.build.dir}"/>
+	 	<mkdir dir="${robotappservice.build.dir}"/>	
+    </target>
+	
+	<target name="init" depends="prepare">
+        <mkdir dir="${robotappservice.build.dir}/WEB-INF/classes"/>
+        <copy includeemptydirs="false" todir="${robotappservice.build.dir}/WEB-INF/classes">
+            <fileset dir="${robotappservice.location}/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    	<copy  todir="${robotappservice.build.dir}">
+	      	<fileset dir="${robotappservice.location}/WebContent" excludes="**/*.java"/>
+	    </copy>
+    </target>
+  
+	<target name="compile" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" 
+        	destdir="${robotappservice.build.dir}/WEB-INF/classes" 
+        	includeantruntime="false" 
+        	executable="${javahome}"
+        	verbose="${verbose}"
+        	deprecation="${deprecation}"
+        	source="${source}" target="${target}" nowarn="on"
+        	encoding="${encoding}">
+            <src path="${robotappservice.location}/src"/>
+            <classpath refid="robotappservice.classpath"/>
+        </javac>
+    </target>
+
+	<!-- Create war robotappservice -->
+	<target name="build" depends="compile" description="Create robotappservice WAR archive">
+    	<echo>Create robotappservice war file</echo>
+		
+	    <war destfile="${robotappservice.war.dir}/${robotappservice.war.name}.war"
+	    	webxml="${robotappservice.build.dir}/WEB-INF/web.xml">
+	   		<fileset dir="${robotappservice.build.dir}"/>
+	    </war>
+		<echo>END: Building robotappservice modules</echo>
+	</target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+</project>
